@@ -4,8 +4,11 @@ import Header from '@/components/Header/Header'; // imported the header file so 
 import Footer from '@/components/Footer/Footer'; // imported the footer file so it can be accessed here for use
 import "./globals.css";
 import ThemeProvider from "@/components/ThemeProvider/ThemeProvider";
+import { NextAuthProvider } from "@/components/AuthProvider/AuthProvider";
 
-const poppins = Poppins({ subsets: ["latin"],  // changed font family from inter to Poppins and added weight, style and variable
+
+// changed font family from inter to Poppins and added weight, style and variable
+const poppins = Poppins({ subsets: ["latin"],  
   weight: ['400', '500', '700', '900'], 
   style: ['italic', 'normal'], 
   variable: '--font-poppins' 
@@ -13,7 +16,7 @@ const poppins = Poppins({ subsets: ["latin"],  // changed font family from inter
 
 export const metadata: Metadata = {
   title: "Hotel Management App",
-  description: "Discover the best hotel rooms like never before",
+  description: "Discover the best hotel experience like never before",
 };
 
 /*
@@ -28,6 +31,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={poppins.className}> 
+        <NextAuthProvider>
         <ThemeProvider>
           <main className="font-normal">
             <Header />
@@ -35,6 +39,7 @@ export default function RootLayout({
             <Footer />
           </main>
         </ThemeProvider>
+        </NextAuthProvider>
       </body>
     </html>
   );
