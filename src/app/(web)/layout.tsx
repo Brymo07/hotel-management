@@ -5,6 +5,7 @@ import Footer from '@/components/Footer/Footer'; // imported the footer file so 
 import "./globals.css";
 import ThemeProvider from "@/components/ThemeProvider/ThemeProvider";
 import { NextAuthProvider } from "@/components/AuthProvider/AuthProvider";
+import Toast from "@/components/Toast/Toast";
 
 
 // changed font family from inter to Poppins and added weight, style and variable
@@ -33,6 +34,7 @@ export default function RootLayout({
       <body className={poppins.className}> 
         <NextAuthProvider>
         <ThemeProvider>
+          <Toast />
           <main className="font-normal">
             <Header />
             {children}

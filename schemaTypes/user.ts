@@ -32,7 +32,17 @@ const user = {
             name: 'password',
             type: 'string',
             hidden: true,
+        }),
+        defineField({
+            name: 'email',
+            type: 'string',
+            title: 'Email',
             validation: Rule => Rule.required(),
+        }),
+        defineField({
+            name: 'emailVerified',
+            type: 'datetime',
+            hidden: true,
         }),
         defineField({
             name: 'about',
