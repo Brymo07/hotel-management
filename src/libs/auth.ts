@@ -24,13 +24,17 @@ export const authOptions: NextAuthOptions = {
     secret: process.env.NEXTAUTH_seCRET,
     callbacks: {
     session: async ({ session, token }) => {
+      // Extract user's email from the token
       const userEmail = token.email;
+
+      // Extract the users's ID from Sanity using the email
       const userIdObj = await sanityClient.fetch<{ _id: string }>(
         `*[_type == "user" && email == $email][0] {
             _id
         }`,
         { email: userEmail }
       );
+      // Return the modified session object, including the user's ID
       return {
         ...session,
         user: {
