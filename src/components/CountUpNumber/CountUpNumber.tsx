@@ -26,10 +26,14 @@ const CountUpNumber: FC<Props> = ({ endValue, duration }) => {
     };
 
     animationFrameId = requestAnimationFrame(updateCount);
+
+    return () => cancelAnimationFrame(animationFrameId);
   }, [endValue, duration]);
 
   return (
-    <section>CountUpNumber</section>
+    <p className="md:font-bold font-medium text-lg xl:text-5xl">
+        {Math.round(count)}
+    </p>
   );
 };
 
