@@ -7,6 +7,7 @@ import useSWR from "swr";
 import { getRooms } from "@/libs/apis";
 import { Room } from "@/models/room";
 import Search from "@/components/Search/Search";
+import RoomCard from "@/components/RoomCard/RoomCard";
 
 const Rooms = () => {
     const [roomTypeFIlter, setRoomTypeFilter] = useState("");
@@ -69,7 +70,7 @@ const Rooms = () => {
 
         <div className="flex mt-20 justify-between flex-wrap">
               {filteredRooms.map(room => (
-                <></>
+                <RoomCard key={room._id} room={room} />
               ))}
         </div>
       </div>
