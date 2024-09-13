@@ -5,6 +5,11 @@ import { getRoom } from "@/libs/apis";
 import useSWR from "swr";
 import LoadingSpinner from "../../loading";
 import HotelPhotoGallery from "@/components/HotelPhotoGallery/HotelPhotoGallery";
+import { MdOutlineCleaningServices } from "react-icons/md";
+import { LiaFireExtinguisherSolid } from "react-icons/lia";
+import { AiOutlineMedicineBox } from "react-icons/ai";
+import { GiSmokeBomb } from "react-icons/gi";
+import BookRoomCta from "@/components/BookRoomCta/BookRoomCta";
 
 const RoomDetails = (props: { params: { slug: string } }) => {
   const {
@@ -46,10 +51,66 @@ const RoomDetails = (props: { params: { slug: string } }) => {
                   </div>
                 ))}
               </div>
+              <div className="mb-11">
+                <h2 className="font-bold text-3xl mb-2">Description</h2>
+                <p>{room.description}</p>
+              </div>
+              <div className="mb-11">
+                <h2 className="font-bold text-3xl mb-2">Offered Amenities</h2>
+                <div className="grid grid-cols-2">
+                  {room.offeredAmenities.map(amenity => (
+                    <div
+                     key={amenity._key} 
+                     className="flex items-center md:my-0 my-1"
+                    >
+                      <i className={`fa-solid ${amenity.icon}`}></i>
+                      <p className='text-xs md:text-base ml-2'>
+                        {amenity.amenity}
+                      </p>
+                  </div>
+                  ))}
+                </div>
+              </div>
+              <div className='mb-11'>
+                <h2 className='font-bold text-3xl mb-2'>Safety And Hygiene</h2>
+                <div className='grid grid-cols-2'>
+                  <div className='flex items-center my-1 md:my-0'>
+                    <MdOutlineCleaningServices />
+                    <p className='ml-2 md:text-base text-xs'>Daily Cleaning</p>
+                  </div>
+                  <div className='flex items-center my-1 md:my-0'>
+                    <LiaFireExtinguisherSolid />
+                    <p className='ml-2 md:text-base text-xs'>
+                      Fire Extinguishers
+                    </p>
+                  </div>
+                  <div className='flex items-center my-1 md:my-0'>
+                    <AiOutlineMedicineBox />
+                    <p className='ml-2 md:text-base text-xs'>
+                      Disinfections and Sterilizations
+                    </p>
+                  </div>
+                  <div className='flex items-center my-1 md:my-0'>
+                    <GiSmokeBomb />
+                    <p className='ml-2 md:text-base text-xs'>Smoke Detectors</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Reviews Section */}
+              <div className='shadow dark:shadow-white rounded-lg p-6'>
+                <div className='items-center mb-4'>
+                  <p className='md:text-lg font-semibold'>Customer Reviews</p>
+                </div>
+                <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+                  {/* <RoomReview roomId={room._id} /> */}
+                </div>
+              </div>
             </div>
           </div>
+
           <div className="md:col-span-4 rounded-xl shadow-lg dark:shadow-white sticky top-10 h-fit overflow-auto">
-            {/* Book Room CTA */}
+            <BookRoomCta discount={room.discount} price={room.price}  />
           </div>
         </div>
       </div>
