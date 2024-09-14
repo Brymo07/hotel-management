@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { getRoom } from "@/libs/apis";
 
 import useSWR from "swr";
@@ -15,6 +16,9 @@ const RoomDetails = (props: { params: { slug: string } }) => {
   const {
     params: { slug },
   } = props;
+
+  const [checkinDate, setCheckinDate] = useState<Date | null>(null)
+  const [checkoutDate, setCheckoutDate] = useState<Date | null>(null)
 
   const fetchRoom = async () => getRoom(slug);
 
@@ -110,7 +114,13 @@ const RoomDetails = (props: { params: { slug: string } }) => {
           </div>
 
           <div className="md:col-span-4 rounded-xl shadow-lg dark:shadow-white sticky top-10 h-fit overflow-auto">
-            <BookRoomCta discount={room.discount} price={room.price}  />
+            <BookRoomCta
+              discount={room.discount} 
+              price={room.price} 
+              specialNote={room.specialNote}
+              checkinDate={checkinDate}
+              setCheckinDate={setCheckinDate}
+            />
           </div>
         </div>
       </div>
