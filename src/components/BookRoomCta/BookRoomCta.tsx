@@ -54,7 +54,9 @@ const BookRoomCta: FC<Props> = props => {
             id='check-in-date'
             className='w-full border text-black border-gray-300 rounded-lg p-2.5 focus:ring-primary focus:border-primary'
           />
-            </div>
+          </div>
+
+        
         </div>
     </div>
   )
