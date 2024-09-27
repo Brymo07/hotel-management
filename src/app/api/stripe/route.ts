@@ -46,8 +46,8 @@ export async function POST(req: Request, res: Response) {
     }
 
     const userId = session.user.id;
-    const formatttedCheckoutDate = checkoutDate.split('T')[0];
-    const formatttedCheckinDate = checkinDate.split('T')[0];
+    const formattedCheckoutDate = checkoutDate.split('T')[0];
+    const formattedCheckinDate = checkinDate.split('T')[0];
 
     try {
         const room = await getRoom(hotelRoomSlug);
@@ -66,10 +66,18 @@ export async function POST(req: Request, res: Response) {
                             name: room.name,
                             images: room.images.map(image => image.url),
                         },
+                        unit_amount: parseInt((totalPrice * 100).toString()),
                     },
                 },
             ],
+            payment_method_types: ['card'],
+            success_url: `${origin}/users/${userId}`,
         });
+
+        return NextResponse.json(stripeSession, {
+            status: 200,
+            statusText: 'Payment session created.'
+        })
 
     } catch (error: any) {
         console.log('Payment failed', error);
