@@ -63,7 +63,7 @@ const RoomDetails = (props: { params: { slug: string } }) => {
         checkinDate,
         checkoutDate,
         adults,
-        Children: noOfChildren,
+        children: noOfChildren,
         numberOfDays,
         hotelRoomSlug,
       });
