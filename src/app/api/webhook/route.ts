@@ -27,7 +27,7 @@ export async function POST(req: Request, res: Response) {
             const session = event.data.object;
             console.log(session);
 
-            // create a booking
+            // create a booking and save
             return NextResponse.json('Booking successful', {
                 status: 200,
                 statusText: 'Booking successful',
