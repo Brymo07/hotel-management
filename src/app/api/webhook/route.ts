@@ -1,3 +1,4 @@
+import { createBooking } from "@/libs/apis";
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
 
@@ -16,7 +17,7 @@ export async function POST(req: Request, res: Response) {
 
     try {
         if (!sig || !webhookSecret) return;
-        event = stripe.webhooks.constructEvent(reqBody, sig, webhookSecret)
+        event = stripe.webhooks.constructEvent(reqBody, sig, webhookSecret);
     } catch (error: any) {
         return new NextResponse(`Webhook Error: ${error.message}`, { status: 500 });
     }
@@ -25,9 +26,17 @@ export async function POST(req: Request, res: Response) {
     switch (event.type) {
         case checkout_session_completed:
             const session = event.data.object;
-            console.log(session);
+            
+            const {
+                // @ts-ignore
+                metadata: {
+                    
+                },
+            } = session;
 
             // create a booking
+            // await createBooking({adults, checkinDate})
+
             return NextResponse.json('Booking successful', {
                 status: 200,
                 statusText: 'Booking successful',

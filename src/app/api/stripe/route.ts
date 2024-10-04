@@ -3,6 +3,7 @@ import { authOptions } from "@/libs/auth";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
+import hotelRoom from "../../../../schemaTypes/hotelRoom";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
     apiVersion: '2024-06-20',
@@ -72,6 +73,17 @@ export async function POST(req: Request, res: Response) {
             ],
             payment_method_types: ['card'],
             success_url: `${origin}/users/${userId}`,
+            metadata: {
+                adults,
+                checkinDate,
+                checkoutDate,
+                children,
+                hotelRoom: room._id,
+                numberOfDays,
+                user: userId,
+                discount: room.discount,
+                totalPrice
+            }
         });
 
         return NextResponse.json(stripeSession, {
