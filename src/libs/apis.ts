@@ -79,12 +79,12 @@ export const updateHotelRoom = async (hotelRoomId: string) => {
         patch: {
           id: hotelRoomId,
           set: {
-            IsBooked: true
-          }
-        }
-      }
-    ]
-  }
+            isBooked: true,
+          },
+        },
+      },
+    ],
+  };
 
   const { data } = await axios.post(
     `https://${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}.api.sanity.io/v2021-10-21/data/mutate/${process.env.NEXT_PUBLIC_SANITY_DATASET}`,
