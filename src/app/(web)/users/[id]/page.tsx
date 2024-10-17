@@ -13,6 +13,7 @@ import { BsJournalBookmarkFill } from "react-icons/bs";
 import { GiMoneyStack } from "react-icons/gi";
 import Table from "@/components/Table/Table";
 import Chart from "@/components/Chart/Chart";
+import RatingModal from "@/components/RatingModal/RatingModal";
 
 const UserDetails = (props: {params: { id: string } }) => {
     const {
@@ -22,7 +23,10 @@ const UserDetails = (props: {params: { id: string } }) => {
     const [currentNav, setCurrentNav] = useState<
         'bookings' | 'amount' | 'ratings'
     >("bookings");
-    const [roomId, setRoomId] = useState<string | null>(null)
+    const [roomId, setRoomId] = useState<string | null>(null);
+    const [isRatingVisible, setIsRatingVisible] = useState(false);
+
+    const toggleRatingModal = () => setIsRatingVisible(prevState => !prevState);
 
     const fetchUserBooking = async () => getUserBookings(userId);
     const fetchUserData = async () => {
@@ -146,6 +150,7 @@ const UserDetails = (props: {params: { id: string } }) => {
                     <Table
                         bookingDetails={userBookings}
                         setRoomId={setRoomId}
+                        toggleRatingModal={toggleRatingModal}
                     />
                     )
                 ) : (
@@ -158,6 +163,7 @@ const UserDetails = (props: {params: { id: string } }) => {
                 )}
             </div>
         </div>
+        <RatingModal isOpen={isRatingVisible}/>
     </div>
   );
 };
