@@ -3,6 +3,8 @@ import sanityClient from "./sanity";
 import * as queries from "./sanityQueries";
 import axios from "axios";
 import { Booking } from "@/models/booking";
+import { UpdateModeEnum } from "chart.js";
+import { updateReviewDto } from "@/models/review";
 
 export async function getFeaturedRoom() {
     const result = await sanityClient.fetch<Room>(
@@ -136,3 +138,31 @@ export async function checkReviewExists(
 
   return result ? result : null;
 }
+
+export const updateReview = async ({
+  reviewId, 
+  reviewText, 
+  userRating,
+}: updateReviewDto) => {
+  const mutation = {
+    mutations: [
+      {
+        patch: {
+          id: reviewId,
+          set: {
+            text: reviewText,
+            userRating,
+          },
+        },
+      },
+    ],
+  };
+  const { data } = await axios.post(
+    `https://${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}.api.sanity.io/v2021-10-21/data/mutate/${process.env.NEXT_PUBLIC_SANITY_DATASET}`,
+    mutation,
+    { headers: { Authorization: `Bearer ${process.env.SANITY_STUDIO_TOKEN}` } }
+  );
+
+  return data;
+};
+

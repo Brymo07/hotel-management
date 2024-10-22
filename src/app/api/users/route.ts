@@ -38,7 +38,7 @@ export async function POST(req: Request, res: Response) {
         // Check if review already exists
         const alreadyExists = await checkReviewExists(userId, roomId)
 
-        console.log(alreadyExists);
+        console.log("alreadyExists", alreadyExists);
     } catch (error: any) {
         console.log('Error Updating', error);
         return new NextResponse('Unable to create review', { status: 400 });
