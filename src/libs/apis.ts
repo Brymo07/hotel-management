@@ -3,8 +3,8 @@ import sanityClient from "./sanity";
 import * as queries from "./sanityQueries";
 import axios from "axios";
 import { Booking } from "@/models/booking";
-import { UpdateModeEnum } from "chart.js";
-import { updateReviewDto } from "@/models/review";
+import { CreateReviewDto, updateReviewDto } from "@/models/review";
+import hotelRoom from "../../schemaTypes/hotelRoom";
 
 export async function getFeaturedRoom() {
     const result = await sanityClient.fetch<Room>(
@@ -166,3 +166,36 @@ export const updateReview = async ({
   return data;
 };
 
+export const createReview = async ({
+  hotelRoomId, 
+  reviewText, 
+  userId, 
+  userRating
+}: CreateReviewDto) => {
+  const mutation = {
+    mutations: [
+      {
+        create: {
+         _type: 'review',
+         user: {
+          _type: 'reference',
+          _ref: userId,
+         },
+         hotelRoom: {
+          _type: 'reference',
+          _ref: hotelRoomId,
+         },
+         userRating,
+         text: reviewText,
+        },
+      },
+    ],
+  };
+  const { data } = await axios.post(
+    `https://${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}.api.sanity.io/v2021-10-21/data/mutate/${process.env.NEXT_PUBLIC_SANITY_DATASET}`,
+    mutation,
+    { headers: { Authorization: `Bearer ${process.env.SANITY_STUDIO_TOKEN}` } }
+  );
+
+  return data;
+};

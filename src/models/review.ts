@@ -5,7 +5,7 @@ export type updateReviewDto = {
 };
 
 export type CreateReviewDto = {
-    reviewRoomId: string;
+    hotelRoomId: string;
     reviewText: string;
     userRating: number;
     userId: string;
